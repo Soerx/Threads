@@ -1,0 +1,26 @@
+﻿<Window x:Class="Threads.MVVM.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewmodels="clr-namespace:Threads.MVVM.ViewModels"
+        xmlns:views="clr-namespace:Threads.MVVM.Views"
+        mc:Ignorable="d"
+        Title="Резьба" Height="450" Width="800">
+    <Window.DataContext>
+        <viewmodels:MainVM />
+    </Window.DataContext>
+    <ContentControl Content="{Binding CurrentVM}">
+        <ContentControl.Resources>
+            <DataTemplate DataType="{x:Type viewmodels:HomeVM}">
+                <views:HomeView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:ThreadItemVM}">
+                <views:ThreadItemView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:ThreadTypeItemVM}">
+                <views:ThreadTypeItemView />
+            </DataTemplate>
+        </ContentControl.Resources>
+    </ContentControl>
+</Window>

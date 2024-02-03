@@ -1,0 +1,66 @@
+﻿<UserControl x:Class="Threads.MVVM.Views.HomeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewmodels="clr-namespace:Threads.MVVM.ViewModels"
+             xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+             d:DataContext="{d:DesignInstance Type=viewmodels:HomeVM}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="ThreadsViewSource" Source="{Binding Path=Threads}">
+            <CollectionViewSource.SortDescriptions>
+                <scm:SortDescription PropertyName="Pitch" />
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+        <CollectionViewSource x:Key="ThreadTypesViewSource" Source="{Binding Path=ThreadTypes}">
+            <CollectionViewSource.SortDescriptions>
+                <scm:SortDescription PropertyName="Name" />
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+    </UserControl.Resources>
+    <StackPanel Margin="15">
+        <StackPanel.Resources>
+            <Style x:Key="Base" TargetType="{x:Type Control}">
+                <Setter Property="Margin" Value="5" />
+                <Setter Property="Padding" Value="5" />
+            </Style>
+        </StackPanel.Resources>
+        <StackPanel Orientation="Horizontal">
+            <Button Command="{Binding CreateThreadTypeCommand}" Content="Создать тип резьбы" Style="{StaticResource Base}"/>
+            <Button Command="{Binding EditThreadTypeCommand}" Content="Изменить тип резьбы" Style="{StaticResource Base}" />
+            <Button Command="{Binding DeleteThreadTypeCommand}" Content="Удалить тип резьбы" Style="{StaticResource Base}" />
+            <Button Command="{Binding CreateThreadCommand}" Content="Создать резьбу" Style="{StaticResource Base}"/>
+            <Button Command="{Binding EditThreadCommand}" Content="Изменить резьбу" Style="{StaticResource Base}" />
+            <Button Command="{Binding DeleteThreadCommand}" Content="Удалить резьбу" Style="{StaticResource Base}" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Тип резьбы:" Margin="5"/>
+            <ComboBox ItemsSource="{Binding Source={StaticResource ThreadTypesViewSource}}"
+                      SelectedItem="{Binding SelectedThreadType}"
+                      IsEnabled="{Binding IsDropDownThreadTypesListEnabled}"
+                      Style="{StaticResource Base}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <TextBlock Text="Внутренняя:" Margin="5"/>
+            <CheckBox IsChecked="{Binding IsInternal}" Style="{StaticResource Base}" />
+            <TextBlock Text="Резьба:" Margin="5"/>
+            <ComboBox ItemsSource="{Binding Source={StaticResource ThreadsViewSource}}"
+                      SelectedItem="{Binding SelectedThread}"
+                      IsEnabled="{Binding IsDropDownThreadsListEnabled}"
+                      Style="{StaticResource Base}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </StackPanel>
+        <TextBlock Text="{Binding SelectedThread.Description}" />
+    </StackPanel>
+</UserControl>
