@@ -47,6 +47,11 @@ namespace Threads.MVVM.ViewModels
                 _selectedThreadType = value;
                 RaisePropertyChanged(nameof(SelectedThreadType));
 
+                if (value == null)
+                {
+                    return;
+                }
+
                 if (Threads != null)
                 {
                     Application.Current.Dispatcher.Invoke(() =>
@@ -103,6 +108,11 @@ namespace Threads.MVVM.ViewModels
 
         private void DeleteThreadType(object parameter)
         {
+            if (_selectedThreadType is null)
+            {
+                return;
+            }
+
             var result = MessageBox.Show($"Вы действительно хотите навсегда удалить тип резьб: {_selectedThreadType.Name}?\n" +
                 $"Данное изменение нельзя будет отменить.", "Вы уверены?", MessageBoxButton.OKCancel, MessageBoxImage.Question);
 
@@ -124,6 +134,11 @@ namespace Threads.MVVM.ViewModels
 
         private void DeleteThread(object parameter)
         {
+            if (_selectedThread == null)
+            {
+                return;
+            }
+
             var result = MessageBox.Show($"Вы действительно хотите навсегда удалить резьбу: {_selectedThread.Name}?\n" +
                 $"Данное изменение нельзя будет отменить.", "Вы уверены?", MessageBoxButton.OKCancel, MessageBoxImage.Question);
 
